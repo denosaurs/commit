@@ -173,6 +173,102 @@ export interface Options {
   warn?: (message?: string) => void | boolean;
 }
 
+export type Commit<
+  Fields extends string | number | symbol = string | number | symbol,
+> = CommitBase & { [Field in Exclude<Fields, keyof CommitBase>]?: Field };
+
+export type Field = string | null;
+
+export interface Note {
+  title: string;
+  text: string;
+}
+
+export interface Reference {
+  issue: string;
+
+  /**
+   * @default
+   * null
+   */
+  action: Field;
+
+  /**
+   * @default
+   * null
+   */
+  owner: Field;
+
+  /**
+   * @default
+   * null
+   */
+  repository: Field;
+
+  prefix: string;
+  raw: string;
+}
+
+export interface Revert {
+  hash?: Field;
+  header?: Field;
+  [field: string]: Field | undefined;
+}
+
+export interface CommitBase {
+  /**
+   * @default
+   * null
+   */
+  merge: Field;
+
+  /**
+   * @default
+   * null
+   */
+  header: Field;
+
+  /**
+   * @default
+   * null
+   */
+  body: Field;
+
+  /**
+   * @default
+   * null
+   */
+  footer: Field;
+
+  /**
+   * @default
+   * []
+   */
+  notes: Note[];
+
+  /**
+   * @default
+   * []
+   */
+  references: Reference[];
+
+  /**
+   * @default
+   * []
+   */
+  mentions: string[];
+
+  /**
+   * @default
+   * null
+   */
+  revert: Revert | null;
+
+  type?: Field;
+  scope?: Field;
+  subject?: Field;
+}
+
 function assignOpts(options?: Options): Required<Options> {
   options = Object.assign(
     {
@@ -210,7 +306,7 @@ function assignOpts(options?: Options): Required<Options> {
  * @param commit  A single commit to be parsed.
  * @param options Same as the `options` of `conventionalCommitsParser`.
  */
-export function parse(commit?: string, options?: Options) {
+export function parse(commit?: string, options?: Options): Commit {
   options = assignOpts(options);
   let reg = regex(options);
 
