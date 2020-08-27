@@ -216,5 +216,3 @@ export function parse(commit?: string, options?: Options) {
 
   return parser(commit, options as Required<Options>, reg);
 }
-
-console.log(parse("fix(std/io): utf-8 encoding"));
