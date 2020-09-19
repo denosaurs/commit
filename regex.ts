@@ -1,6 +1,6 @@
 import { Options, Keywords, Prefixes, Actions } from "./mod.ts";
 
-let reNomatch = /(?!.*)/;
+const reNomatch = /(?!.*)/;
 
 function join(array: string[], joiner: string): string {
   return array
@@ -32,7 +32,7 @@ function getReferencePartsRegex(
     return reNomatch;
   }
 
-  let flags = issuePrefixesCaseSensitive ? "g" : "gi";
+  const flags = issuePrefixesCaseSensitive ? "g" : "gi";
   return new RegExp(
     "(?:.*?)??\\s*([\\w-\\.\\/]*?)??(" +
       join(issuePrefixes as string[], "|") +
@@ -47,7 +47,7 @@ function getReferencesRegex(referenceActions?: Actions): RegExp {
     return /()(.+)/gi;
   }
 
-  let joinedKeywords = join(referenceActions as string[], "|");
+  const joinedKeywords = join(referenceActions as string[], "|");
   return new RegExp(
     "(" + joinedKeywords + ")(?:\\s+(.*?))(?=(?:" + joinedKeywords + ")|$)",
     "gi",
@@ -63,12 +63,12 @@ export interface ParsingRegex {
 
 export function regex(options: Options): ParsingRegex {
   options = options || {};
-  let reNotes = getNotesRegex(options.noteKeywords);
-  let reReferenceParts = getReferencePartsRegex(
+  const reNotes = getNotesRegex(options.noteKeywords);
+  const reReferenceParts = getReferencePartsRegex(
     options.issuePrefixes,
     options.issuePrefixesCaseSensitive,
   );
-  let reReferences = getReferencesRegex(options.referenceActions);
+  const reReferences = getReferencesRegex(options.referenceActions);
 
   return {
     notes: reNotes,

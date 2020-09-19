@@ -308,7 +308,7 @@ function assignOpts(options?: Options): Required<Options> {
  */
 export function parse(commit?: string, options?: Options): Commit {
   options = assignOpts(options);
-  let reg = regex(options);
+  const reg = regex(options);
 
   return parser(commit, options as Required<Options>, reg);
 }
