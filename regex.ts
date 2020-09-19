@@ -1,4 +1,4 @@
-import { Options, Keywords, Prefixes, Actions } from "./mod.ts";
+import type { Options, Keywords, Prefixes, Actions } from "./mod.ts";
 
 const reNomatch = /(?!.*)/;
 
